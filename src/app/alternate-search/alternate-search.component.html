@@ -1,0 +1,87 @@
+
+
+<a [routerLink]="'/'">Basic Search</a> &nbsp; &nbsp;  / &nbsp; &nbsp;  
+<a [routerLink]="'/alternativeSearch'">Alternative Search</a>
+
+
+<div class="container"> 
+    <div class="alert alert-warning" *ngIf="flightForm.dirty && flightForm.invalid ">
+        Enter Valid Values
+    </div>
+
+<table>  <tr> <td> 
+<form (ngSubmit)="!flightForm.invalid && search()" #flightForm="ngForm">
+<fieldset>
+<label>Origin:</label> 
+<input type="text" name="origin" 
+                 [(ngModel)]="origin"
+                 required="required" minlength="3"
+                 class="form-group"
+                 selectBoxOptions="IAH,ORD"
+                 >
+</fieldset>
+
+<fieldset>
+    <label>Destination:</label> 
+    <input type="text" name="destination" 
+                     [(ngModel)]="destination"
+                     required="required" minlength="3"
+                     class="form-group"
+                     selectBoxOptions="IAH,ORD"
+                     >
+</fieldset>
+
+
+<fieldset>
+<label>Departure Date :</label> 
+<input type="datetime-local" name="departureDate" 
+                  [ngModel]="departureDate"
+                  (ngModelChange)="departureDate = $event"
+                  required="required"
+                  class="form-group">
+</fieldset>
+<button type="submit" >Search</button> &nbsp;&nbsp;
+
+</form>
+<button (click)=clear() >Clear</button>
+</td>
+</tr> 
+</table>
+
+<div *ngIf="show">
+        <table class="table">
+
+
+                <caption>Flight Search Results</caption>
+                 <thead>
+                     <tr>
+                       <th> FlightNumber</th>
+                       <th> Carrier </th>
+                       <th> Origin </th>
+                       <th> Departure </th>
+                       <th> Destination </th>
+                       <th> Arrival </th>
+                       <th> Aircraft </th>
+                       <th> Distance </th>
+                       <th> TravelTime </th>
+                       <th> Status </th>
+                    </tr>
+                 </thead>
+                 <tbody>
+                     <tr *ngFor="let flight of flights">
+                            <td> {{flight.flightNumber }} </td>
+                            <td> {{flight.carrier}} </td>
+                            <td> {{flight.origin}} </td>
+                            <td> {{flight.departure | date:'short' }} </td>
+                            <td> {{flight.destination}} </td>
+                            <td> {{flight.arrival | date:'short' }} </td>
+                            <td> {{flight.aircraft}} </td>
+                            <td> {{flight.distance}} </td>
+                            <td> {{flight.travelTime}} </td>
+                            <td> {{flight.status}} </td>
+                 
+                     </tr>
+                 </tbody>
+            </table>>     
+</div>
+</div>
